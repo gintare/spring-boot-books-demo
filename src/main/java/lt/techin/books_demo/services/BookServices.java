@@ -29,6 +29,10 @@ public class BookServices {
         return bookRepository.findAll();
     }
 
+    public Book getOneBook(Long id) {
+        return bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("No book found with sn id = "+id));
+    }
+
     public Book createBook(Long categoryId, CreateBookRequest createBookRequest) {
         Category category = this.categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("No such category with an id ="+categoryId));
         Book book = new Book();

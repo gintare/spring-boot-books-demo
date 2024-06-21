@@ -30,6 +30,11 @@ public class BookControllers {
         return bookServices.getAllBooks();
     }
 
+    @GetMapping("/api/books/{id}")
+    public Book getOneBook(@PathVariable Long id){
+        return bookServices.getOneBook(id);
+    }
+
     @PostMapping("/api/categories/{categoryId}/books")
     public ResponseEntity<?> createBook(@PathVariable Long categoryId, @Valid @RequestBody CreateBookRequest book){
 
