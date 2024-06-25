@@ -40,5 +40,9 @@ public class CategoryControllers {
         this.categoryServices.deleteCategory(id);
     }
 
+    @GetMapping("/{id}")
+    public Category getOneCategory(@PathVariable Long id) {
+        return this.categoryServices.getOneCategory(id);
+    }
 
 }

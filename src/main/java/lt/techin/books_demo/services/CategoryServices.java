@@ -36,4 +36,8 @@ public class CategoryServices {
         Category category1 = this.categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Nu category with id = "+id));
         this.categoryRepository.delete(category1);
     }
+
+    public Category getOneCategory(Long id) {
+        return this.categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Nu category with id = "+id));
+    }
 }
