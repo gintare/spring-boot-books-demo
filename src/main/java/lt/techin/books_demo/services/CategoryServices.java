@@ -33,9 +33,13 @@ public class CategoryServices {
     }
 
     public Category updateCategory(Long id, Category category) {
-        Category category1 = this.categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Nu category with id = "+id));
-        category1.setCategory(category.getCategory());
-        return this.categoryRepository.save(category1);
+        Optional<Category> category1 = this.categoryRepository.findByCategory(category.getCategory());
+        if(category1.isPresent()){
+            throw new DuplicateCategoriesException("Duplicate categories with description = "+category.getCategory());
+        }
+        Category category2 = this.categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Nu category with id = "+id));
+        category2.setCategory(category.getCategory());
+        return this.categoryRepository.save(category2);
     }
 
     public void deleteCategory(Long id) {
