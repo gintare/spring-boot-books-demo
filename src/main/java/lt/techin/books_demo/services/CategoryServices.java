@@ -1,12 +1,14 @@
 package lt.techin.books_demo.services;
 
 import lt.techin.books_demo.exceptions.CategoryNotFoundException;
+import lt.techin.books_demo.exceptions.DuplicateCategoriesException;
 import lt.techin.books_demo.model.Category;
 import lt.techin.books_demo.repositories.CategoryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServices {
@@ -23,6 +25,10 @@ public class CategoryServices {
     }
 
     public Category createCategory(Category category) {
+        Optional<Category> category1 = this.categoryRepository.findByCategory(category.getCategory());
+        if(category1.isPresent()){
+            throw new DuplicateCategoriesException("Duplicate categories with description = "+category.getCategory());
+        }
         return this.categoryRepository.save(category);
     }
 
