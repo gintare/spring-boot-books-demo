@@ -1,5 +1,6 @@
 package lt.techin.books_demo.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import lt.techin.books_demo.controllers.dto.CommentRequest;
 import lt.techin.books_demo.model.Comment;
 import lt.techin.books_demo.services.CommentsServices;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping
 public class CommentController {
@@ -26,6 +28,8 @@ public class CommentController {
 
     @PostMapping("/api/books/{book_id}/comments")
     public ResponseEntity<?> createComment(@PathVariable Long book_id, @RequestBody CommentRequest commentRequest) {
+        log.info("Book id: {}", book_id);
+        log.info("Comment: {}", commentRequest.getText());
         return ResponseEntity.status(HttpStatus.CREATED).body(this.commentsServices.createNewComment(book_id, commentRequest));
     }
 
@@ -38,8 +42,8 @@ public class CommentController {
     public void deleteComment(@PathVariable Long id) {
         this.commentsServices.deleteComment(id);
     }
-
-    @GetMapping("/api/comments/bybookid/{book_id}")
+    @GetMapping("/api/books/{book_id}/comments")
+   // @GetMapping("/api/comments/bybookid/{book_id}")
     public List<Comment> getCommentsByBookId(@PathVariable Long book_id) {
         return commentsServices.findByBookId(book_id);
     }

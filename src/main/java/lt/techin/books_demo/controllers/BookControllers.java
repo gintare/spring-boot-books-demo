@@ -57,11 +57,6 @@ public class BookControllers {
         return this.bookServices.findAllBooksByCategory(categoryId);
     }
 
-//    @GetMapping(name = "/api/comments1")
-//    public List<Comment> getAllComments(){
-//        return null;
-//    }
-
 }
 
 
