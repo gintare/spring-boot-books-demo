@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lt.techin.books_demo.controllers.dto.CreateBookRequest;
 import lt.techin.books_demo.model.Book;
 import lt.techin.books_demo.model.Category;
+import lt.techin.books_demo.model.Comment;
 import lt.techin.books_demo.services.BookServices;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
@@ -55,6 +56,11 @@ public class BookControllers {
     public Set<Book> getAllBooksByCategory(@PathVariable Long categoryId){
         return this.bookServices.findAllBooksByCategory(categoryId);
     }
+
+//    @GetMapping(name = "/api/comments1")
+//    public List<Comment> getAllComments(){
+//        return null;
+//    }
 
 }
 

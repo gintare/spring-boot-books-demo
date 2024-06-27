@@ -1,10 +1,14 @@
 package lt.techin.books_demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -25,6 +29,10 @@ public class Book {
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Comment> comments = new LinkedHashSet<>();
 
     public void addCategory(Category category){
         this.category = category;

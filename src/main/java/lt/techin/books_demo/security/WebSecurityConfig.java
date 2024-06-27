@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,10 +37,11 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(HttpMethod.GET, "/api/users/me").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers("/api/users", "/api/users/**").hasAuthority(ADMIN)
-                        .requestMatchers("/api/books", "/api/books/**", "/api/categories", "/api/categories/**").hasAuthority(USER)
+                        .requestMatchers("/api/books", "/api/books/**", "/api/categories", "/api/categories/**", "/api/comments", "/api/comments/**").hasAuthority(USER)
                         .requestMatchers("/public/**", "/auth/**").permitAll()
-                        .requestMatchers("/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**", "/h2-console", "/h2-console/**", "/**").permitAll()
                         .anyRequest().authenticated())
+                .headers(headers->headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) // this is necessary for h2-console view
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
